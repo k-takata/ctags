@@ -47,5 +47,5 @@ script:
   - if [ $CC = 'gcc' ] && [ $TRAVIS_OS_NAME = 'linux' ]; then make -j2 COVERAGE=1; else make -j2; fi
   - make check TRAVIS=1
 after_success:
-  - if [ $CC = 'gcc' ] && [ $TRAVIS_OS_NAME = 'linux' ]; then git clone --depth=1 https://github.com/linux-test-project/lcov.git ~/lcov && ~/lcov/bin/lcov -c -d . -o coverage.info && lcoveralls --retry-count 5 coverage.info; fi
+  - if [ $CC = 'gcc' ] && [ $TRAVIS_OS_NAME = 'linux' ]; then git clone --depth=1 -b v1.11 https://github.com/linux-test-project/lcov.git ~/lcov && ~/lcov/bin/lcov -c -d . -o coverage.info && lcoveralls --retry-count 5 coverage.info; fi
   - if [ $CC = 'gcc' ] && [ $TRAVIS_OS_NAME = 'linux' ]; then make distclean; make -f mk_mingw.mak CC=i686-w64-mingw32-gcc; fi
