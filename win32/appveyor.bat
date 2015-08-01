@@ -35,4 +35,5 @@ path C:\MinGW\bin;C:\MinGW\msys\1.0\bin;%path%
 sh ./configure
 make
 ctags --version
+make check
 goto :eof
