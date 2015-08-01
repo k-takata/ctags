@@ -30,10 +30,8 @@ ctags --version
 goto :eof
 
 :mingw
-:: path C:\MinGW\bin;C:\MinGW\msys\1.0\bin;%path%
-path C:\MinGW\msys\1.0\bin;%path%
-sh -c "autoreconf -vfi"
-path C:\MinGW\bin;%path%
+path C:\MinGW\bin;C:\MinGW\msys\1.0\bin;%path%
+:: sh -c "autoreconf -vfi"
 sh ./configure
 make
 ctags --version
