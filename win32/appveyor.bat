@@ -35,17 +35,24 @@ cd C:\projects\ctags
 nmake -f mk_mvc.mak WITH_ICONV=yes ICONV_DIR=C:\projects\iconv
 :: Check if it works
 ctags --version
+
 @echo off
 goto :eof
+
 
 :mingw
 :: Using MinGW
 path C:\MinGW\bin;C:\MinGW\msys\1.0\bin;%path%
 @echo on
 :: sh -c "autoreconf -vfi"
-sh ./configure
-make
+:: sh ./configure
+:: make
+:: ctags --version
+:: make check
+
+:: autoreconf doesn't seem to work on AppVeyor. Use mk_mingw.mak instead.
+make -f mk_mingw.mak
 ctags --version
-make check
+
 @echo off
 goto :eof
