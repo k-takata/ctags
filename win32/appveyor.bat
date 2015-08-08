@@ -27,6 +27,7 @@ copy libiconv\msvc10\iconv.dll ctags
 cd C:\projects\ctags\win32
 @echo on
 msbuild ctags_vs2013.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release
+C:\cygwin\bin\file Release\ctags.exe
 :: Check if it works
 Release\ctags --version
 
