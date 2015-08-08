@@ -178,12 +178,18 @@ extern void freeRoutineResources (void)
 {
 	if (CurrentDirectory != NULL)
 		eFree (CurrentDirectory);
+	if (ExecutableName != NULL)
+		eFree (ExecutableName);
 }
 
 extern void setExecutableName (const char *const path)
 {
 	ExecutableProgram = path;
-	ExecutableName = baseFilename (path);
+	if (ExecutableName != NULL)
+		eFree (ExecutableName);
+	ExecutableName = baseFilenameSansExtensionNew (path, ".exe");
+	if (ExecutableName == NULL)
+		ExecutableName = eStrdup ( baseFilename (path) );
 }
 
 extern const char *getExecutableName (void)
