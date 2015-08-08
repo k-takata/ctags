@@ -125,6 +125,7 @@ goto :eof
 c:\cygwin\bin\file ctags.exe
 :: Check if it works
 .\ctags --version || exit 1
+.\ctags --list-features || exit 1
 :: Run tests
 bash -lc "make check"
 
