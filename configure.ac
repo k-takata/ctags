@@ -418,6 +418,7 @@ fi
 # Check for host type
 case "$host" in
   i?86-*-mingw* | x86_64-*-mingw*)
+	host_mingw=yes
 	AC_DEFINE(MSDOS_STYLE_PATH)
 	;;
 esac
@@ -444,7 +445,9 @@ if test "$have_fgetpos" != yes ; then
 			AC_DEFINE(SEEK_SET, 0)))
 fi
 
-AC_CHECK_FUNCS(mkstemp, have_mkstemp=yes)
+if test "$host_mingw" != yes ; then
+	AC_CHECK_FUNCS(mkstemp, have_mkstemp=yes)
+fi
 if test "$have_mkstemp" != yes ; then
 	AC_CHECK_FUNCS(tempnam, have_tempnam=yes)
 fi

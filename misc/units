@@ -1869,6 +1869,12 @@ EOF
 prepare_environment ()
 {
     LC_ALL="C"; export LC_ALL
+
+    # Avoid unexpected pathname conversion on MSYS2.
+    # http://sourceforge.net/p/msys2/wiki/Porting/#filesystem-namespaces
+    if [ `uname -o` = "Msys" ]; then
+        MSYS2_ARG_CONV_EXCL='--regex-'; export MSYS2_ARG_CONV_EXCL
+    fi
 }
 
 main ()

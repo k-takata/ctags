@@ -838,7 +838,13 @@ extern FILE *tempFile (const char *const mode, char **const pName)
 	fd = mkstemp (name);
 	eStatFree (file);
 #elif defined(HAVE_TEMPNAM)
-	name = tempnam (TMPDIR, "tags");
+	const char *tmpdir = NULL;
+#ifdef WIN32
+	tmpdir = getenv ("TMP");
+#endif
+	if (tmpdir == NULL)
+		tmpdir = TMPDIR;
+	name = tempnam (tmpdir, "tags");
 	if (name == NULL)
 		error (FATAL | PERROR, "cannot allocate temporary file name");
 	fd = open (name, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
