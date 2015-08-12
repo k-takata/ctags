@@ -128,6 +128,8 @@ c:\cygwin\bin\file ctags.exe
 :: Run tests
 set MSYS2_ARG_CONV_EXCL=--regex-
 bash -lc "make check"
+type Tmain\lregex-accept-reserved-kind.d\stderr-diff.txt
+type Tmain\lregex-accept-reserved-kind.d\exit-diff.txt
 
 @echo off
 goto :eof
