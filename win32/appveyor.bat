@@ -126,6 +126,7 @@ c:\cygwin\bin\file ctags.exe
 :: Check if it works
 .\ctags --version || exit 1
 :: Run tests
+set MSYS2_ARG_CONV_EXCL=--regex-
 bash -lc "make check"
 
 @echo off
