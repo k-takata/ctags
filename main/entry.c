@@ -494,7 +494,7 @@ static void sortTagFile (void)
 #endif
 		}
 		else if (TagsToStdout)
-			catFile (tagFileName ());
+			catFile (TagFile.fp);
 	}
 }
 

@@ -35,17 +35,15 @@
 *   FUNCTION DEFINITIONS
 */
 
-extern void catFile (const char *const name)
+extern void catFile (FILE *fp)
 {
-	FILE *const fp = fopen (name, "r");
-
 	if (fp != NULL)
 	{
 		int c;
+		fseek (fp, 0, SEEK_SET);
 		while ((c = getc (fp)) != EOF)
 			putchar (c);
 		fflush (stdout);
-		fclose (fp);
 	}
 }
 
