@@ -2,7 +2,7 @@ version: 1.0.{build}
 
 environment:
   global:
-    MSYS2_BASEVER: 20150512
+    MSYS2_BASEVER: 20150916
 
   matrix:
     - compiler: msbuild

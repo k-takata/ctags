@@ -100,7 +100,7 @@ goto :eof
 :: Using MSYS2, iconv enabled
 @echo on
 :: Install MSYS2
-appveyor DownloadFile "http://kent.dl.sourceforge.net/project/msys2/Base/%MSYS2_ARCH%/msys2-base-%MSYS2_ARCH%-%MSYS2_BASEVER%.tar.xz" -FileName "msys2.tar.xz"
+appveyor DownloadFile "http://repo.msys2.org/distrib/%MSYS2_ARCH%/msys2-base-%MSYS2_ARCH%-%MSYS2_BASEVER%.tar.xz" -FileName "msys2.tar.xz"
 c:\cygwin\bin\xz -dc msys2.tar.xz | c:\cygwin\bin\tar xf -
 
 PATH %APPVEYOR_BUILD_FOLDER%\%MSYS2_DIR%\%MSYSTEM%\bin;%APPVEYOR_BUILD_FOLDER%\%MSYS2_DIR%\usr\bin;%PATH%
