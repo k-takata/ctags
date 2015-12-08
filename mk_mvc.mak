@@ -14,6 +14,9 @@ REGEX_DEFINES = -DHAVE_REGCOMP -D__USE_GNU -Dbool=int -Dfalse=0 -Dtrue=1 -Dstrca
 DEFINES = -DWIN32 $(REGEX_DEFINES)
 INCLUDES = -I. -Imain -Ignu_regex -Ifnmatch
 OPT = /O2
+REGEX_OBJS = $(REGEX_SRCS:.c=.obj)
+FNMATCH_OBJS = $(FNMATCH_SRCS:.c=.obj)
+ALL_OBJS = $(ALL_SRCS:.c=.obj) $(REGEX_OBJS) $(FNMATCH_OBJS)
 
 !if "$(WITH_ICONV)" == "yes"
 DEFINES = $(DEFINES) -DHAVE_ICONV
@@ -26,13 +29,19 @@ DEFINES = $(DEFINES) -DDEBUG
 OPT = $(OPT) /Zi
 !endif
 
+{main}.c{main}.obj::
+	$(CC) $(OPT) $(DEFINES) $(INCLUDES) /Fomain\ /c $<
+{parsers}.c{parsers}.obj::
+	$(CC) $(OPT) $(DEFINES) $(INCLUDES) /Foparsers\ /c $<
+
 ctags: ctags.exe
 
-ctags.exe: respmvc
-	cl $(OPT) /Fe$@ @respmvc /link setargv.obj $(LIBS)
+ctags.exe: $(ALL_OBJS) $(ALL_HEADS) $(REGEX_HEADS) $(FNMATCH_HEADS)
+	$(CC) $(OPT) /Fe$@ $(ALL_OBJS) /link setargv.obj $(LIBS)
 
 readtags.exe: readtags.c
-	cl /clr $(OPT) /Fe$@ $(DEFINES) -DREADTAGS_MAIN readtags.c /link setargv.obj
+	$(CC) /clr $(OPT) /Fe$@ $(DEFINES) -DREADTAGS_MAIN readtags.c /link setargv.obj
+
 
 $(REGEX_OBJS): $(REGEX_SRCS)
 	cl /c $(OPT) /Fo$@ $(INCLUDES) $(DEFINES) $(REGEX_SRCS)
@@ -40,15 +49,8 @@ $(REGEX_OBJS): $(REGEX_SRCS)
 $(FNMATCH_OBJS): $(FNMATCH_SRCS)
 	cl /c $(OPT) /Fo$@ $(INCLUDES) $(DEFINES) $(FNMATCH_SRCS)
 
-respmvc: $(REGEX_OBJS) $(FNMATCH_OBJS) $(ALL_SRCS) $(REGEX_SRCS) $(FNMATCH_SRCS) $(ALL_HEADS) $(REGEX_HEADS) $(FNMATCH_HEADS) mk_mvc.mak
-	echo $(DEFINES) > $@
-	echo $(INCLUDES) >> $@
-	echo $(ALL_SRCS) >> $@
-	echo $(REGEX_SRCS) >> $@
-	echo $(FNMATCH_SRCS) >> $@
 
 clean:
-	- del *.obj
+	- del *.obj main\*.obj parsers\*.obj gnu_regex\*.obj fnmatch\*.obj
 	- del ctags.exe
-	- del respmvc
 	- del tags
