@@ -244,6 +244,7 @@ appveyor DownloadFile http://cygwin.com/setup-x86_64.exe -FileName c:\cygwin64\s
 c:\cygwin64\setup-x86_64.exe -qnNdOg -P dos2unix,libiconv-devel,libjansson-devel,libxml2-devel,libyaml-devel,pcre2,perl
 PATH c:\cygwin64\bin;%PATH%
 set CHERE_INVOKING=yes
+bash -lc "git config --global --add safe.directory $(cygpath ${APPVEYOR_BUILD_FOLDER%%\\\\})"
 bash -lc "./autogen.sh"
 bash -lc "./configure && make -j2"
 
